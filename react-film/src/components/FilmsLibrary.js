@@ -15,7 +15,6 @@ function Film(id, title, isFavorite = false, dateWatched, rating) {
         const starNow = (i < this.rating) ? starFilled : starEmpty;
         this.star += starNow;
     }
-
     this.updateStar = () => {
         this.star = '';
         for (let i = 0; i < 5; i++) {
@@ -23,79 +22,50 @@ function Film(id, title, isFavorite = false, dateWatched, rating) {
             this.star += starNow;
         }
     }
+   
+}
 
-        // Filters
-        this.isBestRated = () => { return this.rating === 5; }
+function FilmLibrary() {
 
-        this.isSeenLastMonth = () => {
-            return dayjs(this.watchDate).isAfter(dayjs().subtract(1, 'month'));
-        }
+    this.list = [];
 
-        this.isUnseen = () => {
-            return this.watchDate === undefined;
-        }
-
-        this.toString = () => {
-            return `Id: ${this.id}, ` +
-                `Title: ${this.title}, Favorite: ${this.isFavorite}, Score: ${this.formatRating()}, ` +
-                `watchDate: ${this.formatWatchDate('YYYY-MM-DD')}`;
-        }
-
-        this.formatWatchDate = (format) => {
-            return this.watchDate ? dayjs(this.watchDate).format(format) : '';
-        }
-
-        this.formatRating = () => {
-            return this.rating ? this.rating : '<not assigned>';
-        }
+    this.addNewFilmByRow = (id, title, isFavorite, dateWatched, rating) => {
+        const newFilm = new Film(id, title, isFavorite, dateWatched, rating);
+        this.list.push(newFilm);
+        return this.list;
     }
 
-    function FilmLibrary() {
-
-        this.list = [];
-
-        this.addNewFilmByRow = (id, title, isFavorite, dateWatched, rating) => {
-            const newFilm = new Film(id, title, isFavorite, dateWatched, rating);
-            this.list.push(newFilm);
-            return this.list;
-        }
-
-        this.addNewFilm = ([...films]) => {
-            films.forEach(f => {
-                this.list.push(f);
-            })
-        }
-
-        this.getFilms = () => {
-            return this.list;
-        }
-
-        this.filterAll = () => {
-            // Using "filter" method we return a copy of the list, not the list itself.
-            return this.list.filter(() => true);
-        }
-
-        this.updateFilm = (id, title, isFav, date, rating) => {
-            return this.list.filter(f => {
-                if (f.id === id) {
-                    f.title = title;
-                    f.isFavorite = isFav;
-                    f.watchDate = dayjs(date).format('YYYY-MM-DD');
-                    f.rating = rating;
-                    return f;
-                } else {
-                    return f;
-                }
-            });
-        }
+    this.addNewFilm = ([...films]) => {
+        films.forEach(f => {
+            this.list.push(f);
+        })
     }
 
-    const pf = new Film(0, 'Pulp Fiction', true, dayjs('2022-03-10'), 5);
-    const g21 = new Film(1, '21 Grams', true, dayjs('2022-03-17'), 4);
-    const sw = new Film(2, 'Star Wars', false, undefined, undefined);
-    const matrix = new Film(3, 'Matrix', false, undefined, undefined);
-    const shrek = new Film(4, 'Shrek', false, dayjs('2022-03-30'), 3);
-    const library = new FilmLibrary();
-    library.addNewFilm([pf, g21, sw, matrix, shrek]);
+    this.getFilms = () => {
+        return this.list;
+    }
 
-    export {library}
+    this.updateFilm = (id, title, isFav, date, rating) => {
+        return this.list.filter(f => {
+            if (f.id === id) {
+                f.title = title;
+                f.isFavorite = isFav;
+                f.watchDate = dayjs(date).format('YYYY-MM-DD');
+                f.rating = rating;
+                return f;
+            } else {
+                return f;
+            }
+        });
+    }
+}
+
+const pf = new Film(0, 'Pulp Fiction', true, dayjs('2022-03-10'), 5);
+const g21 = new Film(1, '21 Grams', true, dayjs('2022-03-17'), 4);
+const sw = new Film(2, 'Star Wars', false, undefined, undefined);
+const matrix = new Film(3, 'Matrix', false, undefined, undefined);
+const shrek = new Film(4, 'Shrek', false, dayjs('2022-03-30'), 3);
+const library = new FilmLibrary();
+library.addNewFilm([pf, g21, sw, matrix, shrek]);
+
+export { library }

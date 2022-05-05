@@ -8,9 +8,10 @@ function ListGroupFilters(props) {
             return props.films.map(f => <FilmRow
                 film = { f }
                 key = { f.id }
-                deleteFilm={props.deleteFilm} 
-                setFilmToEdit = { props.setFilmToEdit }
+                deleteFilm={props.deleteFilm}
                 setShowForm = { props.setShowForm }
+                setFilmToEdit = { props.setFilmToEdit }
+                
                 
                 />
                 );
@@ -20,8 +21,9 @@ function ListGroupFilters(props) {
                     film = { f }
                     key = { f.id }
                     deleteFilm={props.deleteFilm}
+                    setShowForm = { props.setShowForm }
                     setFilmToEdit = { props.setFilmToEdit }
-                    setShowForm = { props.setShowForm }/>);
+                />);
         case "Best Rated" :
             return props.films.filter(f => f.rating === 5)
                 .map(f => <FilmRow film = { f }
@@ -30,7 +32,7 @@ function ListGroupFilters(props) {
                                    deleteFilm={props.deleteFilm}
                                    setShowForm = { props.setShowForm }/>);
         case "Seen since Last Month" :
-            return props.films.filter(f => dayjs(f.watchDate).isAfter(dayjs().subtract(1, 'month')))
+            return props.films.filter(f => dayjs(f.watchDate).isAfter(dayjs().subtract(1, 'month'))&& f.watchDate!==undefined)
                 .map(f => <FilmRow film = { f }
                                    key = { f.id }
                                    deleteFilm={props.deleteFilm}
@@ -40,11 +42,13 @@ function ListGroupFilters(props) {
             return props.films.filter(f => f.watchDate === undefined)
                 .map(f => <FilmRow film = { f }
                                    key = { f.id }
+                                   deleteFilm={props.deleteFilm}
                                    setFilmToEdit = { props.setFilmToEdit }
                                    setShowForm = { props.setShowForm }/>);
         default :
             return props.films.map(f => <FilmRow film = { f }
                                                  key = { f.id }
+                                                 deleteFilm={props.deleteFilm}
                                                  setFilmToEdit = { props.setFilmToEdit }
                                                  setShowForm = { props.setShowForm }/>);
     }
@@ -72,13 +76,13 @@ function FilmRow(props) {
                 <div dangerouslySetInnerHTML={{__html: props.film.star}} />
             </div>
             <div className="col-2 justify-content-end">
-             <FilmActions deleteFilm={props.deleteFilm}  film={props.film} setFilmToEdit={props.setFilmToEdit} setShowForm={props.setShowForm}/>
+             <FilmActions deleteFilm={props.deleteFilm}  setShowForm={props.setShowForm} setFilmToEdit={props.setFilmToEdit} film={props.film} />
             </div>
         </li>
     );
 }
 function FilmActions(props) {
-    return <><Button variant='danger' onClick={() => props.deleteFilm(props.film.title)}><i className='bi bi-trash3'></i></Button>&nbsp;
+    return <><Button variant='danger' onClick={() => {props.deleteFilm(props.film.title)}}><i className='bi bi-trash3'></i></Button>&nbsp;
            <Button variant = "primary" onClick = {() => {props.setShowForm(true); props.setFilmToEdit(props.film);}}><i className='bi bi-pencil-square'></i></Button></>
   }
 

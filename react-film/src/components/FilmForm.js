@@ -1,24 +1,17 @@
 import { Button, Form } from 'react-bootstrap';
 import { useState } from 'react';
 import dayjs from 'dayjs';
+import { StarForm } from "./StarForm";
 
 function FilmForm(props) {
   const [title, setTitle] = useState(props.filmToEdit ? props.filmToEdit.title : '');
   const [isFavorite, setIsFavorite] = useState(props.filmToEdit ? props.filmToEdit.isFavorite : false);
-  const [dateWatched, setDateWatched] = useState(props.filmToEdit ?
-    dayjs(props.filmToEdit.watchDate).format('YYYY-MM-DD') :
-    dayjs());
+  const [dateWatched, setDateWatched] = useState(props.filmToEdit ? dayjs(props.filmToEdit.watchDate).format('YYYY-MM-DD') : dayjs());
   const [rating, setRating] = useState(props.filmToEdit ? props.filmToEdit.rating : 5);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const film = {
-      id: props.newId,
-      title: title,
-      isFavorite: isFavorite,
-      dateWatched: dayjs(dateWatched).format('YYYY-MM-DD'),
-      rating: rating,
-    };
+    const film = { id: props.newId, title: title, isFavorite: isFavorite, dateWatched: dayjs(dateWatched).format('YYYY-MM-DD'), rating: rating };
     // VALIDATION!
     if (props.filmToEdit === undefined) {
       props.addFilm(film);
@@ -57,21 +50,27 @@ function FilmForm(props) {
           value={dayjs(dateWatched).format('YYYY-MM-DD')}
           onChange={event => setDateWatched(dayjs(event.target.value).format('YYYY-MM-DD'))} />
       </Form.Group>
-
-      <Form.Group className="mb-3">
+      {/*<Form.Group className="mt-3 mb-3">*/}
+      {/*  <Form.Label>Rating</Form.Label>*/}
+      {/*  <Form.Control type="number"*/}
+      {/*                min={0}*/}
+      {/*                max={5}*/}
+      {/*                value={rating}*/}
+      {/*                onChange={event => {*/}
+      {/*                    setRating(event.target.value);*/}
+      {/*                }}/>*/}
+      {/*</Form.Group>*/}
+      <Form.Group className="mt-3 mb-3">
         <Form.Label>Rating</Form.Label>
-        <Form.Control type="number"
-          min={0}
-          max={5}
-          value={rating}
-          onChange={event => setRating(event.target.value)} />
+        <StarForm setRating={setRating} rating={rating} />
       </Form.Group>
-
-
-      <Button variant="primary" type="submit">Save</Button> <Button variant="danger" onClick={props.cancel}>Cancel</Button>
+      <Button variant="primary" type="submit">Save</Button>
+      <Button className="ms-2" variant="danger" onClick={props.cancel}>Cancel</Button>
 
     </Form>
   )
+
+
 }
 
 export { FilmForm };
