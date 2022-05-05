@@ -12,7 +12,7 @@ function App() {
 
   const [filmList, setFilmList] = useState(library.getFilms());
   const [filter, setFilter] = useState("All");
-  const filters = FilmFiltersTitle(library, setFilmList, setFilter);
+  const filters = FilmFiltersTitle(setFilter);
 
   return (
     <>
