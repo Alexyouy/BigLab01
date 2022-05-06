@@ -7,7 +7,7 @@ function FilmForm(props) {
   const [title, setTitle] = useState(props.filmToEdit ? props.filmToEdit.title : '');
   const [isFavorite, setIsFavorite] = useState(props.filmToEdit ? props.filmToEdit.isFavorite : false);
   const [dateWatched, setDateWatched] = useState(props.filmToEdit ? dayjs(props.filmToEdit.watchDate).format('YYYY-MM-DD') : dayjs());
-  const [rating, setRating] = useState(props.filmToEdit ? props.filmToEdit.rating : 5);
+  const [rating, setRating] = useState(props.filmToEdit ? props.filmToEdit.rating : 0);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,6 +34,7 @@ function FilmForm(props) {
 
   return (
     <Form onSubmit={handleSubmit}>
+     <h1 className="mb-2">Add film here:</h1> 
       <Form.Group className="mb-3">
         <Form.Label>Title</Form.Label>
         <Form.Control
