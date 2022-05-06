@@ -10,7 +10,7 @@ import { FilmFiltersTitle } from "./components/FilmFiltersTitle";
 
 function App() {
 
-  const [filmList, setFilmList] = useState(library.getFilms);
+  const [filmList, setFilmList] = useState(library.getFilms());
   const [filter, setFilter] = useState("All");
   const filters = FilmFiltersTitle(setFilter);
 
