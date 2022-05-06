@@ -52,7 +52,7 @@ function Films(props) {
                 setFilmToEdit={setFilmToEdit}
                 setShowForm={setShowForm}
                 cancel={() => setShowForm(false)} /> :
-                <Button variant='success'
+                <Button variant='primary'
                     className="btn btn-lg btn-primary"
                     onClick={() => {
                         setFilmToEdit();
